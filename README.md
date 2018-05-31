@@ -1,9 +1,9 @@
-# CryptoHaiku
+# Juno
 
-> CryptoHaiku is a new form of Japanese culture Haiku using blockchains
+> juno is a form of new marriage using blockchains
 
 # technology
-ERC721 + IPFS (Solidity + web3.js + truffle + nuxt.js)
+ERC721 (Solidity + web3.js + truffle + nuxt.js)
 
 ## Build Setup
 
@@ -27,19 +27,6 @@ $ npm run generate
 ``` bash
 
 $ direnv edit .
-
-# Please register to firebase and paste the setting
-export APIKEY=
-export AUTHDOMAIN=
-export DATABASEURL=
-export PROJECTID=
-export STORAGEBUCKET=
-export MESSAGINGSENDERID=
-
-# Please paste the ipfs parameters
-export IPFSHOST=
-export IPFSPORT=
-export IPFSPROTOCOL=
 
 # Please edit the deploy env
 export TXURL=export TXURL=https://rinkeby.etherscan.io/tx/
