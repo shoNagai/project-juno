@@ -2,6 +2,7 @@ pragma solidity ^0.4.23;
 
 import "zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
 import "./Mortal.sol";
+import "./Pausable.sol";
 
 contract JunoToken is ERC721Token, Mortal, Pausable {
 
@@ -16,11 +17,9 @@ contract JunoToken is ERC721Token, Mortal, Pausable {
 
   Couple[] Couples;
 
-  mapping (address => uint256) internal coupleTokens;
+  mapping (address => uint256[]) internal coupleTokens;
 
-  constructor() public ERC721Token("JunoToken", "JUN") {
-
-  }
+  constructor() public ERC721Token("JunoToken", "JUN") {}
 
   function mint(string _groom, string _bride, address _groomAddr, address _brideAddr) external whenNotPaused returns(uint256) {
     require(msg.sender != address(0));
@@ -29,16 +28,16 @@ contract JunoToken is ERC721Token, Mortal, Pausable {
       groom: _groom,
       bride: _bride,
       groomAddr: _groomAddr,
-      groomAddr: _brideAddr,
+      brideAddr: _brideAddr,
       junoPoint: 10,
       mintTime: uint64(now)
     });
 
-    uint256 tokenId = Couple.push(couple) - 1;
+    uint256 tokenId = Couples.push(couple) - 1;
     super._mint(msg.sender, tokenId);
 
-    coupleTokens[_groomAddr] = tokenId;
-    coupleTokens[_brideAddr] = tokenId;
+    coupleTokens[_groomAddr].push(tokenId);
+    coupleTokens[_brideAddr].push(tokenId);
 
     return tokenId;
   }
@@ -59,7 +58,7 @@ contract JunoToken is ERC721Token, Mortal, Pausable {
   function getCouple(uint256 _tokenId) external view
    returns (string groom, string bride, uint256 junoPoint, uint64 mintTime) {
     
-    Couple memory couple = Couple[_tokenId];
+    Couple memory couple = Couples[_tokenId];
     groom = couple.groom;
     bride = couple.bride;
     junoPoint = couple.junoPoint;

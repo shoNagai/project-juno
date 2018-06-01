@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import Web3 from 'web3'
 import contract from 'truffle-contract'
 import artifacts from '../../build/contracts/JunoToken.json'
 const JunoToken = contract(artifacts)
@@ -29,30 +28,9 @@ export default {
     }
   },
   created() {
-    if (typeof web3 !== 'undefined') {
-      // Use Mist/MetaMask's provider
-      web3 = new Web3(web3.currentProvider)
-    } else {
-      // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-      web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"))
-    }
-    JunoToken.setProvider(web3.currentProvider)
-    web3.eth.getAccounts((err, accs) => {
-      if (web3.currentProvider.publicConfigStore._state.networkVersion !== process.env.NETWORKID) {
-        this.isNetwork = false
-      } else {
-        this.isNetwork = true
-      }
-      if (err != null) {
-        console.log(err)
-        this.message = "There was an error fetching your accounts. Do you have Metamask, Mist installed or an Ethereum node running? If not, you might want to look into that"
-        return
-      }
-      if (accs.length == 0) {
-        this.message = "Couldn't get any accounts! Make sure your Ethereum client is configured correctly."
-        return
-      }
-      this.account = accs[0];
+    console.log('dispatching registerWeb3')
+    this.$store.dispatch('web3/registerWeb3').then(() => {
+      JunoToken.setProvider(web3.currentProvider)
       JunoToken.deployed().then((instance) => instance.address).then((address) => {
         this.contractAddress = address
       })
