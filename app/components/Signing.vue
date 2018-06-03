@@ -139,8 +139,7 @@ export default {
         && this.bride !== "" && this.bride !== null
         && this.content !== "" && this.content !== null) {
         this.errormessage = ""
-        // this.sign();
-        this.isActive = true;
+        this.sign();
       }else {
         this.errormessage = "You must fill in all of the fields."
       }
