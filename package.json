@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "bulma": "^0.7.1",
+    "foobar": "^1.1.0",
     "node-sass": "^4.9.0",
     "nuxt": "^1.4.0",
     "sass-loader": "^7.0.1",
