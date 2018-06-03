@@ -42,12 +42,14 @@ export default {
     }
   },
   mounted() {
-    if (typeof web3 !== 'undefined') {
-      // Use Mist/MetaMask's provider
-      web3 = new Web3(web3.currentProvider)
-    } else {
-      web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"))
-    }
+    // if (typeof web3 !== 'undefined') {
+    //   // Use Mist/MetaMask's provider
+    //   web3 = new Web3(web3.currentProvider)
+    // } else {
+    //   web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"))
+    // }
+    web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
+    
     JunoToken.setProvider(web3.currentProvider)
     web3.eth.getAccounts((err, accs) => {
       if (web3.currentProvider.publicConfigStore._state.networkVersion !== process.env.NETWORKID) {
