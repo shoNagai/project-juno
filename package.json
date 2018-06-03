@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "juno is a form of new marriage using blockchains",
   "author": "shonagai <strawberry4062@gmail.com>",
+  "engines": {
+    "node": "9.2.0"
+  },
   "private": true,
   "scripts": {
     "dev": "nuxt",
