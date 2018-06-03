@@ -1,15 +1,15 @@
 <template>
   <div class="container">
-    <AllCouples class="column is-narrow is-12" />
+    <MyCouples class="column is-narrow is-12" />
   </div>
 </template>
 
 <script>
-import AllCouples from '~/components/AllCouples.vue'
+import MyCouples from '~/components/MyCouples.vue'
 
 export default {
   components: {
-    AllCouples
+    MyCouples
   },
   fetch ({store}) {
     store.commit('menu/resetMenu')

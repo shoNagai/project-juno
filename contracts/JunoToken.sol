@@ -9,6 +9,7 @@ contract JunoToken is ERC721Token, Mortal, Pausable {
   struct Couple {
     string groom;
     string bride;
+    string content;
     address groomAddr;
     address brideAddr;
     uint256 junoPoint;
@@ -19,16 +20,19 @@ contract JunoToken is ERC721Token, Mortal, Pausable {
 
   mapping (address => uint256[]) internal coupleTokens;
 
-  constructor() public ERC721Token("JunoToken", "JUN") {}
+  event Mint(address owner, uint256 tokenId);
 
-  function mint(string _groom, string _bride, address _groomAddr, address _brideAddr) external whenNotPaused returns(uint256) {
+  constructor() public ERC721Token("JunoToken", "JNT") {}
+
+  function mint(string _groom, string _bride, string _content) external whenNotPaused returns(uint256) {
     require(msg.sender != address(0));
 
     Couple memory couple = Couple({
       groom: _groom,
       bride: _bride,
-      groomAddr: _groomAddr,
-      brideAddr: _brideAddr,
+      content: _content,
+      groomAddr:address(0),
+      brideAddr:address(0),
       junoPoint: 10,
       mintTime: uint64(now)
     });
@@ -36,8 +40,7 @@ contract JunoToken is ERC721Token, Mortal, Pausable {
     uint256 tokenId = Couples.push(couple) - 1;
     super._mint(msg.sender, tokenId);
 
-    coupleTokens[_groomAddr].push(tokenId);
-    coupleTokens[_brideAddr].push(tokenId);
+    emit Mint(msg.sender, tokenId);
 
     return tokenId;
   }
@@ -50,19 +53,20 @@ contract JunoToken is ERC721Token, Mortal, Pausable {
     return allTokens;
   }
 
-  function getCouples() external view returns (uint256[]) {
-    // require(_target != address(0));
-    return coupleTokens[msg.sender];
+  function getCouples(address _owner) external view returns (uint256[]) {
+    require(_owner != address(0));
+    return ownedTokens[_owner];
   }
 
-  function getCouple(uint256 _tokenId) external view
-   returns (string groom, string bride, uint256 junoPoint, uint64 mintTime) {
+  function getCouple(uint256 _tokenId) external view returns (string groom, string bride, string content, uint256 junoPoint, uint64 mintTime) {
+    require(msg.sender != address(0));
     
     Couple memory couple = Couples[_tokenId];
     groom = couple.groom;
     bride = couple.bride;
+    content = couple.content;
     junoPoint = couple.junoPoint;
     mintTime = couple.mintTime;
-
   }
+
 }

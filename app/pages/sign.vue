@@ -1,15 +1,17 @@
 <template>
   <div class="container">
-    <AllCouples class="column is-narrow is-12" />
+    <div class="column is-8 is-offset-2">
+      <Signing class="column is-narrow is-9" />
+    </div>
   </div>
 </template>
 
 <script>
-import AllCouples from '~/components/AllCouples.vue'
+import Signing from '~/components/Signing.vue'
 
 export default {
   components: {
-    AllCouples
+    Signing
   },
   fetch ({store}) {
     store.commit('menu/resetMenu')

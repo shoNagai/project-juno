@@ -10,12 +10,12 @@
     </div>
     <div v-if="isNetwork" class="container has-text-centered column is-10 is-offset-1">
       <center>
-        <h4 class="title is-4">All Cauples</h4>
+        <h4 class="title is-4">My Cauples</h4>
       </center>
       <br/>
       <div v-for="(couple, key, index) in allCouples" :key="index" >
         <article class="post">
-          <h4>{{ couple.groom }} × {{ couple.bride }}</h4>
+          <h4>{{ couple.groom }} × {{ couple.bride }}<a class="delete" @click="deleteCouple(couple.tokenId)"></a></h4>
           <h4>{{ couple.content }}</h4>
         </article>
         <br/>
@@ -31,7 +31,7 @@ import artifacts from '../../build/contracts/JunoToken.json'
 const JunoToken = contract(artifacts)
 
 export default {
-  name: 'AllCouples',
+  name: 'MyCouples',
   data() {
     return {
       isNetwork: false,
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     getAllCouples() {
-      JunoToken.deployed().then((instance) => instance.getAllCouples()).then((result) => {
+      JunoToken.deployed().then((instance) => instance.getCouples(this.account, { from: this.account })).then((result) => {
         for (var i = 0; i < result.length; i++) {
           this.getCouple(result[i])
         }
@@ -101,6 +101,26 @@ export default {
         this.allCouples.push(couple)
       })
     },
+    async deleteCouple(tokenId) {
+      this.message = "Transaction started";
+      await JunoToken.deployed()
+      .then((instance) => instance.burn(tokenId, { from: this.account }))
+      .then((result) => {
+        this.message = "Transaction result"
+      }).catch((e) => {
+        console.error(e)
+        this.message = "Transaction failed"
+      })
+    },
   }
 }
 </script>
+
+<style>
+.allcauples.list {
+  border-bottom: solid 1px rgba(0,0,0,0.42);
+  margin-left: 300px;
+  margin-right: 300px;
+  margin-top: 50px;
+}
+</style>

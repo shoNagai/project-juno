@@ -15,14 +15,14 @@ module.exports = {
       port: 7545,
       network_id: "*"
     },
-    rinkeby: {
+    ropsten: {
       provider:function(){
         return new HDWalletProvider(
           mnemonic,
-          "https://rinkeby.infura.io/" + accessToken
+          "https://ropsten.infura.io/" + accessToken
         );
       },
-      network_id:4,
+      network_id:3,
       gas:500000
     }
   }
