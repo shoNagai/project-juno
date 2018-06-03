@@ -2,6 +2,9 @@
 
 > juno is a form of new marriage using blockchains
 
+# demo
+https://juno-project.herokuapp.com/
+
 # technology
 ERC721 (Solidity + web3.js + truffle + nuxt.js)
 
@@ -33,7 +36,7 @@ export TXURL=export TXURL=https://ropsten.etherscan.io/tx/
 export NETWORKID=3
 ```
 
-## Truffle Setup
+## Truffle Test Setup
 
 ``` bash
 # deploy ganache localhost
