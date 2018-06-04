@@ -13,13 +13,16 @@
         <h4 class="title is-4">Sign</h4>
       </center>
       <br/>
-      <div v-if="message">
-        <div>・{{message}}</div>
-        <div v-if="txHash"><a v-bind:href="txUrl">{{txHash}}</a></div>
+      <div v-if="message" class="content has-text-centered">
+        <div class="notification is-info">・{{message}}</div>
       </div>
-      <div v-if="errormessage">
+      <!-- <div v-if="txHash" class="content has-text-centered">
+        <div class="notification is-link" v-if="txHash">
+          <a v-bind:href="txUrl">{{txHash}}</a>
+        </div>
+      </div> -->
+      <div v-if="errormessage" class="content has-text-centered">
         <div class="notification is-danger">・{{errormessage}}</div>
-        <br/>
       </div>
       <div class="field is-horizontal">
           <div class="field-body">
@@ -119,7 +122,7 @@ export default {
         this.groom, this.bride, this.content, {
         from: this.account
       })).then((result) => {
-        this.message = "Transaction result"
+        this.message = "Transaction success"
         this.txHash = result.tx
         this.txUrl = process.env.TXURL + result.tx
         this.groom = null
@@ -127,6 +130,7 @@ export default {
         this.content = null
       }).catch((e) => {
         console.error(e)
+        this.message = null
         this.errormessage = "Transaction failed"
       })
     },
@@ -134,7 +138,7 @@ export default {
       if(this.groom !== "" && this.groom !== null
         && this.bride !== "" && this.bride !== null
         && this.content !== "" && this.content !== null) {
-        this.errormessage = ""
+        this.errormessage = null
         this.sign();
       }else {
         this.errormessage = "You must fill in all of the fields."
