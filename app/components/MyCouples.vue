@@ -41,7 +41,7 @@ export default {
       contractAddress: null,
     }
   },
-  mounted() {
+  async mounted() {
     // if (typeof web3 !== 'undefined') {
     //   // Use Mist/MetaMask's provider
     //   web3 = new Web3(web3.currentProvider)
@@ -51,8 +51,9 @@ export default {
     web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
     
     JunoToken.setProvider(web3.currentProvider)
+    const networkId = await web3.eth.net.getId();
     web3.eth.getAccounts((err, accs) => {
-      if (web3.currentProvider.publicConfigStore._state.networkVersion !== process.env.NETWORKID) {
+      if (networkId !== Number(process.env.NETWORKID)) {
         this.isNetwork = false
       } else {
         this.isNetwork = true
