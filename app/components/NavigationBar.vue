@@ -19,6 +19,7 @@
               <nuxt-link to="/sign" class="navbar-item ">Sign</nuxt-link>          
               <nuxt-link to="/allList" class="navbar-item ">Couples</nuxt-link>
               <nuxt-link to="/myPage" class="navbar-item ">MyPage</nuxt-link>
+              <nuxt-link to="/faq" class="navbar-item ">FAQs</nuxt-link>
             </div>
           </div>
         </div>
@@ -33,6 +34,6 @@ export default {
     setActive(){
       Vue.set(this.$data, 'isActive', true)
     }
-  }
+  },
 }
 </script>

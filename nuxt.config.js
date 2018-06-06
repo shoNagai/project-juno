@@ -28,6 +28,7 @@ module.exports = {
     // middleware: 'authenticated'
   },
   plugins: [
+    '~plugins/vue-scrollto.js'
   ],
   /*
   ** Nuxt.js modules
