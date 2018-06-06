@@ -32,7 +32,7 @@ $ npm run generate
 $ direnv edit .
 
 # Please edit the deploy env
-export TXURL=export TXURL=https://ropsten.etherscan.io/tx/
+export TXURL=https://ropsten.etherscan.io/tx/
 export NETWORKID=3
 ```
 
