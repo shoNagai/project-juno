@@ -9,16 +9,20 @@
       <p v-if="!account && isNetwork">No accounts found</p>
     </div>
     <div v-if="isNetwork" class="container has-text-centered column is-10 is-offset-1">
-      <center>
-        <h4 class="title is-4">My Cauples</h4>
-      </center>
-      <br/>
-      <div v-for="(couple, key, index) in allCouples" :key="index" >
-        <article class="post">
-          <h4>{{ couple.groom }} × {{ couple.bride }}<a class="delete" @click="deleteCouple(couple.tokenId)"></a></h4>
-          <h4>{{ couple.content }}</h4>
-        </article>
-        <br/>
+      <h4 class="title is-4">My Cauples</h4>
+      <div class="columns is-mobile is-multiline is-centered">
+        <div v-for="(couple, key, index) in allCouples" :key="index" >
+          <div class="card couple-card">
+            <div class="message-header">
+              <p>#{{couple.tokenId}}</p>
+              <button class="delete" aria-label="delete" @click="deleteCouple(couple.tokenId)"></button>
+            </div>
+            <div class="card-content">
+              <h4 class="title">{{ couple.content }}</h4>
+              <h4 class="subtitle">{{ couple.groom }} × {{ couple.bride }}</h4>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -88,7 +92,7 @@ export default {
           "junoPoint": null,
           "mintTime": null,
         }
-        couple.tokenId = tokenId
+        couple.tokenId = Number(tokenId)
         couple.groom = result[0].toString()
         couple.bride = result[1].toString()
         couple.content = result[2].toString()
@@ -118,5 +122,16 @@ export default {
   margin-left: 300px;
   margin-right: 300px;
   margin-top: 50px;
+}
+.couple-card {
+  width: 285px;
+  height: 200px;
+  margin: 5px;
+}
+.couple-card:hover { 	
+  box-shadow: 0 15px 10px -5px rgba(0,0,0,.15),0 0 5px rgba(0,0,0,.1);
+  transform: translateY(-4px);
+  transition: 0.2s;
+  background: #fff;
 }
 </style>

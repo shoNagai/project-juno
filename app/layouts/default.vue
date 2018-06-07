@@ -59,14 +59,14 @@ export default {
 #return-top {
     background-color: #363636;
     border-radius: 50%;
-    bottom: 50px;
+    bottom: 10px;
     color: #fff;
     font-size: 14px;
     height: 50px;
     line-height: 50px;
     outline: 0;
     position: fixed;
-    right: 30px;
+    right: 20px;
     text-align: center;
     width: 50px;
 }
