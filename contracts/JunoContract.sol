@@ -50,35 +50,34 @@ contract JunoContract is Mortal, Pausable {
     emit Blessing(_junoId, numAttendee);
   }
 
-  function sign() external whenNotPaused {
+  function sign(uint256 _junoId) external whenNotPaused {
     require(msg.sender != address(0));
 
-    Juno storage juno = junos[junoId];
+    Juno storage juno = junos[_junoId];
     juno.signTime = uint64(now);
 
-    emit Sign(msg.sender, junoId);
+    emit Sign(msg.sender, _junoId);
   }
 
   function getAllJunos() external view returns (uint256[]) {
     return junoIds;
   }
 
-  function getJunoLight(uint256 _junoId) external view returns (string groom, string bride, string startTime) {
+  function getJunoLight(uint256 _junoId) external view returns (string groom, string bride, uint64 startTime) {
     require(msg.sender != address(0));
     
-    Juno memory juno = Juno[_junoId];
+    Juno memory juno = junos[_junoId];
     groom = juno.groom;
     bride = juno.bride;
     startTime = juno.startTime;
   }
 
-  function getJunoAll(uint256 _junoId) external view returns (string groom, string bride, string sginTime, string[] attendee) {
+  function getJunoAll(uint256 _junoId) external view returns (string groom, string bride, uint64 signTime) {
     require(msg.sender != address(0));
     
-    Juno memory juno = Juno[_junoId];
+    Juno memory juno = junos[_junoId];
     groom = juno.groom;
     bride = juno.bride;
-    signTime = juno.sginTime;
-    attendee = juno.attendee;
+    signTime = juno.signTime;
   }
 }
