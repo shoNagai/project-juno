@@ -9,8 +9,14 @@ contract JunoContract is Mortal, Pausable {
     string groom;
     string bride;
     uint64 startTime;
-    string[] attendee;
+    mapping (uint256 => Attendee) attendee;
     uint64 signTime;
+  }
+
+  struct Attendee {
+    string name;
+    uint64 color;
+    uint32 elect;
   }
 
   uint256 public numJunos;
@@ -18,7 +24,7 @@ contract JunoContract is Mortal, Pausable {
   mapping (uint256 => Juno) internal junos;
 
   event Plan(address sender, uint256 junoId);
-  event Blessing(uint256 junoId, uint256 numAttendee);
+  event Blessing(uint256 junoId, string name, uint64 color, uint32 elect);
   event Sign(address sender, uint256 junoId);
 
   constructor() public {
@@ -43,11 +49,18 @@ contract JunoContract is Mortal, Pausable {
     return junoId;
   }
 
-  function blessing(uint256 _junoId, string _attendee) external whenNotPaused {
-    Juno storage juno = junos[_junoId];
-    uint256 numAttendee = juno.attendee.push(_attendee);
+  function blessing(uint256 _junoId, string _name, uint64 _color, uint32 _elect) external whenNotPaused {
+    require(msg.sender != address(0));
+    require(bytes(_attendee).length != 0);
 
-    emit Blessing(_junoId, numAttendee);
+    Juno storage juno = junos[_junoId];
+
+    Attendee storage attendee = juno.attendee[_junoId];
+    attendee.name = _name;
+    attendee.color - _color;
+    attendee.elect = _elect;
+
+    emit Blessing(_junoId, _name, _color, _elect);
   }
 
   function sign(uint256 _junoId) external whenNotPaused {
